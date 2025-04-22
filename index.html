@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -39,10 +38,9 @@
       color: blue;
     }
     #resultsWrapper {
-  
-  min-height: 200px;
+      min-height: 200px;
       height: auto;
-  max-height: none;
+      max-height: none;
       overflow-y: auto;
       padding: 10px;
       background-color: #fdfdfd;
@@ -58,16 +56,6 @@
       line-height: 1.6;
       user-select: text;
       -webkit-user-select: text;
-    
-      background: #fff;
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      line-height: 1.6;
-    }
-    .result b:first-child {
-      color: red;
     }
     .btn {
       background: #1976d2;
@@ -81,29 +69,19 @@
       color: red;
       text-align: center;
     }
-  
-  @media (max-width: 600px) {
-    .result {
-      background: #fff;
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      line-height: 1.6;
-      user-select: text;
-      -webkit-user-select: text;
-    
-      font-size: 14px;
+    @media (max-width: 600px) {
+      .result {
+        font-size: 14px;
+      }
     }
-  }
-</style>
+  </style>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
   <div id="container">
     <div id="loginSection" style="display:block;">
-      <h2>เข้าสู่ระบบเพื่อค้นหาข้อมูลผู้โชคดี</h2>
+      <h2>กรุณาเข้าสู่ระบบเพื่อค้นหาข้อมูล</h2>
       <input type="text" id="username" placeholder="ชื่อผู้ใช้" />
       <input type="password" id="password" placeholder="รหัสผ่าน" />
       <button class="btn" onclick="login()">เข้าสู่ระบบ</button>
@@ -145,6 +123,13 @@
       }
     }
 
+    document.getElementById("username").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") login();
+    });
+    document.getElementById("password").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") login();
+    });
+
     fetch("https://opensheet.elk.sh/1oR3McgNWwwpT8uFKI6KlK8VRxzp10WBZbw8bfiQnw5o/Sheet1")
       .then(res => res.json())
       .then(data => { allData = data; });
@@ -162,19 +147,19 @@
       countDiv.innerHTML = `พบทั้งหมด <b>${data.length}</b> รายการ`;
       resultsDiv.innerHTML = data.map((row, index) => `
         <div class="result">
-      <div style="text-align: right; margin-bottom: 5px;">
-        <button onclick="captureImage(this)" style="font-size:12px;padding:4px 8px;border-radius:5px;">📷</button>
-      </div>
-  <span style="color:#003366;"><b>ลำดับ ${index + 1}</b></span><br>
-  <span style="color:#003366;"><b>ชื่อ-สกุล:</b></span> <span style="color:red;">${row["ชื่อ-สกุล"] || "-"}</span><br>
-  <span style="color:#003366;"><b>เลขประจำตัวประชาชน:</b></span> <span style="color:red;">${row["เลขประจำตัวประชาชน"] || "-"}</span><br>
-  <span style="color:#003366;"><b>ชื่ออื่นๆ:</b></span> <span style="color:red;">${row["ชื่ออื่นๆ"] || "-"}</span><br>
-  <span style="color:#003366;"><b>สถานภาพ:</b></span> <span style="color:red;">${row["สถานภาพ"] || "-"}</span><br>
-  <span style="color:#003366;"><b>บัญชี:</b></span> <span style="color:red;">${row["บัญชี"] || "-"}</span><br>
-  <span style="color:#003366;"><b>พฤติกรรม:</b></span> <span style="color:red;">${row["พฤติกรรม"] || "-"}</span><br>
-  <span style="color:#003366;"><b>หมายเหตุ:</b></span> <span style="color:red;">${row["หมายเหตุ"] || "-"}</span><br>
-  <span style="color:#003366;"><b>พื้นที่/ที่อยู่:</b></span> <span style="color:red;">${row["พื้นที่/ที่อยู่"] || "-"}</span>
-</div>
+          <div style="text-align: right; margin-bottom: 5px;">
+            <button onclick="captureImage(this)" style="font-size:12px;padding:4px 8px;border-radius:5px;">📷</button>
+          </div>
+          <b><span style="color:#003366;">ลำดับ</span> ${index + 1}</b><br>
+          <b><span style="color:#003366;">ชื่อ-สกุล:</span></b> <span style="color:red;">${row["ชื่อ-สกุล"] || "-"}</span><br>
+          <b><span style="color:#003366;">เลขประจำตัวประชาชน:</span></b> <span>${row["เลขประจำตัวประชาชน"] || "-"}</span><br>
+          <b><span style="color:#003366;">ชื่ออื่นๆ:</span></b> <span>${row["ชื่ออื่นๆ"] || "-"}</span><br>
+          <b><span style="color:#003366;">สถานภาพ:</span></b> <span>${row["สถานภาพ"] || "-"}</span><br>
+          <b><span style="color:#003366;">บัญชี:</span></b> <span>${row["บัญชี"] || "-"}</span><br>
+          <b><span style="color:#003366;">พฤติกรรม:</span></b> <span>${row["พฤติกรรม"] || "-"}</span><br>
+          <b><span style="color:#003366;">หมายเหตุ:</span></b> <span>${row["หมายเหตุ"] || "-"}</span><br>
+          <b><span style="color:#003366;">พื้นที่/ที่อยู่:</span></b> <span>${row["พื้นที่/ที่อยู่"] || "-"}</span>
+        </div>
       `).join("");
     }
 
@@ -204,18 +189,16 @@
         filterData();
       }
     });
-  </script>
 
-<script>
-  function captureImage(button) {
-    const card = button.closest('.result');
-    html2canvas(card).then(canvas => {
-      const link = document.createElement("a");
-      link.download = "result.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
-</script>
+    function captureImage(button) {
+      const card = button.closest('.result');
+      html2canvas(card).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "result.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
 </body>
 </html>
